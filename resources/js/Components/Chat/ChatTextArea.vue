@@ -2,7 +2,7 @@
 
 import {ref} from "vue";
 
-const emit = defineEmits(['valid']);
+const emit = defineEmits(['valid', 'typing']);
 const model = ref('');
 
 /**
@@ -24,6 +24,22 @@ const handleEnter = (event) => {
     }
 }
 
+let typingTimeout = null;
+
+const handleTyping = () => {
+    clearTimeout(typingTimeout);
+
+    emit('typing', true);
+
+    typingTimeout = setTimeout(handleFinishedTyping, 3000);
+}
+
+const handleFinishedTyping = () => {
+    clearTimeout(typingTimeout);
+
+    emit('typing', false);
+}
+
 </script>
 
 <template>
@@ -33,5 +49,6 @@ const handleEnter = (event) => {
         class="rounded-md border-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
         placeholder="Say Something..."
         v-model="model"
-        @keydown.enter.prevent="handleEnter($event)"/>
+        @keydown.enter.prevent="handleEnter($event)"
+        @keydown="handleTyping"/>
 </template>

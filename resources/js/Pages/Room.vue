@@ -6,6 +6,7 @@ import {useMessagesStore} from '@/Store/useMessagesStore.js';
 import ChatMessages from "@/Components/Chat/ChatMessages.vue";
 import {useUsersStore} from "@/Store/useUsersStore.js";
 import ChatUsers from "@/Components/Chat/ChatUsers.vue";
+import {onUnmounted} from "vue";
 
 const props = defineProps({
     room: Object,
@@ -20,15 +21,19 @@ const storeMessage = (payload) => {
     messagesStore.storeMessage(props.room.slug, payload)
 }
 
+onUnmounted(() => {
+    Echo.leave(`room.${props.room.id}`)
+})
+
 const channel = Echo.join(`room.${props.room.id}`);
 
 channel
     .listen('MessageCreated', (e) => {
         messagesStore.pushMessage(e)
     })
-    .here(users => {
-        usersStore.setUsers(users);
-    })
+    .here(users => usersStore.setUsers(users))
+    .joining(user => usersStore.addUser(user))
+    .leaving(user => usersStore.removeUser(user))
 
 </script>
 
@@ -61,6 +66,7 @@ channel
                         <ChatTextArea
                             class="w-full"
                             v-on:valid="storeMessage({ body: $event })"
+                            v-on:typing="console.log($event)"
                         />
                     </div>
                 </div>
