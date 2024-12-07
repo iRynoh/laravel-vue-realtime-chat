@@ -23,6 +23,10 @@ export const useUsersStore = defineStore("users", {
 
         setTyping(e) {
             this.users.find(u => u.id === e.id).typing = e.typing
+        },
+
+        clearUsers() {
+            this.users = [];
         }
     },
 

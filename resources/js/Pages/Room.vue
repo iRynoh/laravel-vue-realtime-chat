@@ -24,6 +24,7 @@ const storeMessage = (payload) => {
 onUnmounted(() => {
     Echo.leave(`room.${props.room.id}`);
     messagesStore.clearMessages();
+    usersStore.clearUsers();
 })
 
 const channel = Echo.join(`room.${props.room.id}`);
