@@ -19,7 +19,7 @@ class MessageSeeder extends Seeder
             ->sequence(function (Sequence $sequence) {
                 return [
                     'body' => 'Message ' . $sequence->index,
-                    'created_at' => now()->subYear()->addHour()
+                    'created_at' => now()->subYear()->addHours($sequence->index)
                 ];
             })
             ->create([
