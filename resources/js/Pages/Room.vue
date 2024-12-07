@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import {Head} from '@inertiajs/vue3';
+import ChatTextArea from "@/Components/Chat/ChatTextArea.vue";
 
 defineProps({
     room: Object,
@@ -9,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Room" />
+    <Head title="Room"/>
 
     <AuthenticatedLayout>
         <template #header>
@@ -33,7 +34,10 @@ defineProps({
                     class="overflow-hidden bg-white shadow-sm sm:rounded-lg col-span-9"
                 >
                     <div class="p-6 text-gray-900">
-                        Messages
+                        <ChatTextArea
+                            class="w-full"
+                            v-on:valid="console.log($event)"
+                        />
                     </div>
                 </div>
             </div>
