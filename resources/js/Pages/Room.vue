@@ -3,12 +3,15 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head} from '@inertiajs/vue3';
 import ChatTextArea from '@/Components/Chat/ChatTextArea.vue';
 import {useMessagesStore} from '@/Store/useMessagesStore.js';
+import ChatMessages from "@/Components/Chat/ChatMessages.vue";
+
+const props = defineProps({
+    room: Object,
+});
 
 const messagesStore = useMessagesStore();
 
-defineProps({
-    room: Object,
-});
+messagesStore.fetchState(props.room.slug);
 
 </script>
 
@@ -36,7 +39,8 @@ defineProps({
                 <div
                     class="overflow-hidden bg-white shadow-sm sm:rounded-lg col-span-9"
                 >
-                    <div class="p-6 text-gray-900">
+                    <div class="p-6 text-gray-900 space-y-3">
+                        <ChatMessages />
                         <ChatTextArea
                             class="w-full"
                             v-on:valid="console.log($event)"
