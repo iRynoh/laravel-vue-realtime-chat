@@ -51,7 +51,7 @@ REVERB_PORT=8080
 REVERB_SCHEME=http
 ```
 
-The default Reverb configuration works out of the box for local development, no additional setup needed.```
+The default Reverb configuration works out of the box for local development, no additional setup needed.
 
 6. Run migrations and seeders
 ```bash
@@ -62,6 +62,13 @@ php artisan migrate:fresh --seed
 ```bash
 npm run dev
 ```
+
+8. Start Reverb WebSocket Server:
+```bash
+php artisan reverb:start --debug
+```
+
+Leave this terminal session open while working locally.
 
 8. Start server
 ```bash
