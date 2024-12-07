@@ -3,20 +3,32 @@ import axios from "axios";
 
 export const useMessagesStore = defineStore("messages", {
     state: () => ({
-        page: 1,
-        messages: []
+        page: 1, messages: []
     }),
 
     actions: {
-        async fetchState(roomSlug, page = 1) {
-            try {
-                const response = await axios.get(`/rooms/${roomSlug}/messages`);
+        fetchState(roomSlug, page = 1) {
+            axios.get(`/rooms/${roomSlug}/messages?page=${page}`).then((response) => {
                 const data = response.data;
                 this.page = data.meta.current_page
                 this.messages = [...this.messages, ...data.data]
-            } catch (e) {
-                console.log('Error getting the messages for room', e);
-            }
+            }).catch((error) => {
+                console.log('Error fetching messages', error);
+            });
+
+        },
+
+        fetchPreviousState(roomSlug) {
+            this.fetchState(roomSlug, this.page + 1);
+        },
+
+        storeMessage(roomSlug, payload) {
+            axios.post(`/rooms/${roomSlug}/messages`, payload)
+                .then((response) => {
+                    this.messages = [response.data, ...this.messages];
+                }).catch((error) => {
+                console.log('Error storing message', error);
+            })
         }
     },
 

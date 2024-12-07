@@ -1,18 +1,24 @@
 <script setup>
 import {useMessagesStore} from "@/Store/useMessagesStore.js";
-import { useIntersectionObserver} from "@vueuse/core";
+import {useIntersectionObserver} from "@vueuse/core";
 import {ref} from "vue";
+
+const props = defineProps({
+    room: Object
+})
 
 const messagesStore = useMessagesStore();
 
 const target = ref(null)
 
-const { stop } = useIntersectionObserver(
+const {stop} = useIntersectionObserver(
     target,
-    ([{ isIntersecting }], observerElement) => {
-        if (isIntersecting) {
-            console.log(isIntersecting)
+    ([{isIntersecting}], observerElement) => {
+        if (!isIntersecting) {
+            return;
         }
+
+        messagesStore.fetchPreviousState(props.room.slug)
     }
 )
 </script>
