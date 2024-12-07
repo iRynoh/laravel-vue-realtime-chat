@@ -22,6 +22,11 @@ export const useMessagesStore = defineStore("messages", {
             this.fetchState(roomSlug, this.page + 1);
         },
 
+        pushMessage(message) {
+            this.messages.pop() // Needed to avoid duplicates as we paginate the old messages.
+            this.messages = [message, ...this.messages];
+        },
+
         storeMessage(roomSlug, payload) {
             axios.post(`/rooms/${roomSlug}/messages`, payload, {
                 headers: {
@@ -29,11 +34,11 @@ export const useMessagesStore = defineStore("messages", {
                 }
             })
                 .then((response) => {
-                    this.messages = [response.data, ...this.messages];
+                    this.pushMessage(response.data);
                 }).catch((error) => {
                 console.log('Error storing message', error);
             })
-        }
+        },
     },
 
     getters: {
