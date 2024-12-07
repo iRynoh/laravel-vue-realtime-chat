@@ -17,6 +17,13 @@ const storeMessage = (payload) => {
     messagesStore.storeMessage(props.room.slug, payload)
 }
 
+const channel = Echo.join(`room.${props.room.id}`);
+
+channel
+    .listen('MessageCreated', (e) => {
+        console.log(e)
+    })
+
 </script>
 
 <template>
@@ -44,7 +51,7 @@ const storeMessage = (payload) => {
                     class="overflow-hidden bg-white shadow-sm sm:rounded-lg col-span-9"
                 >
                     <div class="p-6 text-gray-900 space-y-3">
-                        <ChatMessages :room="room" />
+                        <ChatMessages :room="room"/>
                         <ChatTextArea
                             class="w-full"
                             v-on:valid="storeMessage({ body: $event })"

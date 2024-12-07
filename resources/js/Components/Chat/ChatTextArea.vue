@@ -6,7 +6,7 @@ const emit = defineEmits(['valid']);
 const model = ref('');
 
 /**
- * We want to be able to send the message on Enter key if any valid message
+ * We want to be able to emit valid on Enter key if any valid message
  * is present. Shift+Enter is used to create a linebreak.
  * @param event
  */
