@@ -1,6 +1,6 @@
 # Laravel Vue Realtime Chat 🚀
 
-A real-time multi-room chat application built with Laravel, Vue.js, Inertia, and Pinia. Because who doesn't love real-time messaging? 💬
+A real-time multi-room chat application built with Laravel, Vue.js, Inertia, and Pinia. Man, I want to eat a pineapple now...🍍
 
 ## ✨ Features
 
@@ -43,7 +43,6 @@ DB_PASSWORD=your_password
 
 5. Set up Reverb credentials in .env (or keep the default configuration for local development)
 ```
-DB_DATABASE=laravel_vue_realtime_chat
 REVERB_APP_ID=your_app_id  # Optional for local dev
 REVERB_APP_KEY=your_app_key # Optional for local dev
 REVERB_APP_SECRET=your_app_secret # Optional for local dev
@@ -71,7 +70,7 @@ php artisan serve
 
 ## 👥 Demo Users
 
-Login with either of our friendly test users:
+Log in with either of our friendly test users:
 
 - 👨 John Doe
     - Email: john@example.com
@@ -81,7 +80,7 @@ Login with either of our friendly test users:
     - Email: jane@example.com
     - Password: pass12345
 
-Room #1 comes with pre-seeded chat history between John and Jane - they've been having quite the conversation! 😄
+Room #1 comes with a pre-seeded chat history between John and Jane - they've been having quite the conversation! 😄
 
 ## 🤝 Contributing
 
