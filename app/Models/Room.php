@@ -9,4 +9,9 @@ class Room extends Model
 {
     /** @use HasFactory<\Database\Factories\RoomFactory> */
     use HasFactory;
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
 }
