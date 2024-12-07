@@ -1,7 +1,10 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head} from '@inertiajs/vue3';
-import ChatTextArea from "@/Components/Chat/ChatTextArea.vue";
+import ChatTextArea from '@/Components/Chat/ChatTextArea.vue';
+import {useMessagesStore} from '@/Store/useMessagesStore.js';
+
+const messagesStore = useMessagesStore();
 
 defineProps({
     room: Object,
