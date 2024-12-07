@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardShowController;
 use App\Http\Controllers\MessageIndexController;
 use App\Http\Controllers\MessageStoreController;
 use App\Http\Controllers\ProfileController;
@@ -17,16 +18,20 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', DashboardShowController::class)
+        ->name('dashboard');
 
-Route::get('/rooms/{room:slug}', RoomShowController::class)->middleware(['auth', 'verified'])->name('room.show');
-Route::get('/rooms/{room:slug}/messages', MessageIndexController::class)->middleware([
-    'auth', 'verified'
-])->name('room.show.messages');
-Route::post('/rooms/{room:slug}/messages', MessageStoreController::class)
-    ->middleware(['auth', 'verified']);
+    Route::prefix('rooms/{room:slug}')->group(function () {
+        Route::get('/', RoomShowController::class)
+            ->name('room.show');
+
+        Route::get('/messages', MessageIndexController::class)
+            ->name('room.show.messages');
+
+        Route::post('/messages', MessageStoreController::class);
+    });
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

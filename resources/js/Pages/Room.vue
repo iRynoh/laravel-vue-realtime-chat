@@ -22,7 +22,8 @@ const storeMessage = (payload) => {
 }
 
 onUnmounted(() => {
-    Echo.leave(`room.${props.room.id}`)
+    Echo.leave(`room.${props.room.id}`);
+    messagesStore.clearMessages();
 })
 
 const channel = Echo.join(`room.${props.room.id}`);
@@ -46,7 +47,7 @@ channel
             <h2
                 class="text-xl font-semibold leading-tight text-gray-800"
             >
-                {{ room.title }}
+                Room: {{ room.title }}
             </h2>
         </template>
 

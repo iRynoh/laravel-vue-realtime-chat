@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const useMessagesStore = defineStore("messages", {
     state: () => ({
-        page: 1, messages: []
+        page: 1, messages: [], pageCount: 20
     }),
 
     actions: {
@@ -11,6 +11,7 @@ export const useMessagesStore = defineStore("messages", {
             axios.get(`/rooms/${roomSlug}/messages?page=${page}`).then((response) => {
                 const data = response.data;
                 this.page = data.meta.current_page
+                this.pageCount = data.meta.per_page
                 this.messages = [...this.messages, ...data.data]
             }).catch((error) => {
                 console.log('Error fetching messages', error);
@@ -23,7 +24,10 @@ export const useMessagesStore = defineStore("messages", {
         },
 
         pushMessage(message) {
-            this.messages.pop() // Needed to avoid duplicates as we paginate the old messages.
+            if (this.messages.length > this.pageCount) {
+                // Needed to avoid duplicates as we paginate the old messages.
+                this.messages.pop();
+            }
             this.messages = [message, ...this.messages];
         },
 
@@ -39,6 +43,10 @@ export const useMessagesStore = defineStore("messages", {
                 console.log('Error storing message', error);
             })
         },
+
+        clearMessages() {
+            this.messages = [];
+        }
     },
 
     getters: {
