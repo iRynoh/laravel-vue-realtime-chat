@@ -19,6 +19,10 @@ export const useUsersStore = defineStore("users", {
 
         removeUser(user) {
             this.users = this.users.filter(u => u.id !== user.id);
+        },
+
+        setTyping(e) {
+            this.users.find(u => u.id === e.id).typing = e.typing
         }
     },
 

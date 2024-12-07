@@ -18,7 +18,7 @@ class MessageResource extends JsonResource
             'id' => $this->id,
             'body' => $this->body,
             'user' => PublicUserResource::make($this->whenLoaded('user')),
-            'created_at' => $this->created_at,
+            'created_at' => $this->createdAtHuman(),
         ];
     }
 }

@@ -21,11 +21,15 @@ const handleEnter = (event) => {
     if (message.length) {
         emit('valid', message);
         model.value = '';
+        handleFinishedTyping();
     }
 }
 
 let typingTimeout = null;
 
+/**
+ * Handle typing event with 3 seconds timeout.
+ */
 const handleTyping = () => {
     clearTimeout(typingTimeout);
 
@@ -49,6 +53,6 @@ const handleFinishedTyping = () => {
         class="rounded-md border-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
         placeholder="Say Something..."
         v-model="model"
-        @keydown.enter.prevent="handleEnter($event)"
-        @keydown="handleTyping"/>
+        @keydown="handleTyping"
+        @keydown.enter.prevent="handleEnter($event)"/>
 </template>

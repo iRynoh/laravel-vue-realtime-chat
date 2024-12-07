@@ -23,4 +23,15 @@ class Message extends Model
     {
         return $this->belongsTo(Room::class);
     }
+
+    public function createdAtHuman(): string
+    {
+        $day = match (true) {
+            $this->created_at->isToday() => 'Today',
+            $this->created_at->isYesterday() => 'Yesterday',
+            default => $this->created_at->toDateString(),
+        };
+
+        return $day.' '.$this->created_at->toTimeString('minute');
+    }
 }
