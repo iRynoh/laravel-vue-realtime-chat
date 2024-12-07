@@ -14,17 +14,19 @@ class MessageSeeder extends Seeder
      */
     public function run(): void
     {
-        Message::factory()
-            ->times(5000)
-            ->sequence(function (Sequence $sequence) {
-                return [
-                    'body' => 'Message ' . $sequence->index,
-                    'created_at' => now()->subYear()->addHours($sequence->index)
-                ];
-            })
-            ->create([
-                'user_id' => 1,
-                'room_id' => 1
-            ]);
+        $faker = \Faker\Factory::create();
+        $startDate = now()->subYear();
+
+        for ($user_id = 1; $user_id <= 2; $user_id++) {
+            Message::factory()
+                ->count(30)
+                ->sequence(fn($sequence) => [
+                    'user_id' => $user_id,
+                    'room_id' => 1,
+                    'body' => $faker->realText(rand(20, 100)),
+                    'created_at' => $startDate->copy()->addHours($sequence->index)
+                ])
+                ->create();
+        }
     }
 }
