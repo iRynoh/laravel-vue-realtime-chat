@@ -29,7 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/messages', MessageIndexController::class)
             ->name('room.show.messages');
 
-        Route::post('/messages', MessageStoreController::class);
+        Route::post('/messages', MessageStoreController::class)->name('room.show.messages.store');
     });
 });
 
