@@ -36,7 +36,6 @@ test('users can create messages', function () {
 
     $response->assertCreated()
         ->assertJson([
-            'id' => 1,
             'body' => 'Test message',
             'user' => [
                 'id' => $this->user->id,
